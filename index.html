@@ -39,14 +39,19 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.1);
       text-align: center;
       transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .vault-card:hover {
       transform: translateY(-5px);
     }
     .vault-title {
-      font-size: 1.5em;
-      color: #2C5282;
-      margin-bottom: 20px;
+      min-height: 3em; /* Ensures equal title area height */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
     .vault-button {
       display: inline-block;
@@ -73,17 +78,17 @@
     <div class="vault-grid">
       <div class="vault-card">
         <h3 class="vault-title">G-Code Differences</h3>
-        <a href="gcode_diff.html" class="vault-button">Go</a>
+        <a href="pages/gcode_diff.html" class="vault-button">Go</a>
       </div>
 
       <div class="vault-card">
         <h3 class="vault-title">M-Code Differences</h3>
-        <a href="mcode_diff.html" class="vault-button">Go</a>
+        <a href="pages/mcode_diff.html" class="vault-button">Go</a>
       </div>
 
       <div class="vault-card">
         <h3 class="vault-title">Canned Cycle Differences</h3>
-        <a href="canned_cycles.html" class="vault-button">Go</a>
+        <a href="pages/canned_cycles.html" class="vault-button">Go</a>
       </div>
     </div>
   </main>
