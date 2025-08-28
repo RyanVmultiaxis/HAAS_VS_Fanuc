@@ -1,0 +1,154 @@
+# Recreate the HTML file again since the previous session reset cleared it.
+html = r"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Haas vs Fanuc — G-Code Differences</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color:#333;
+      min-height:100vh;
+    }
+    .page {
+      max-width:1200px;
+      margin:40px auto;
+      background:#fff;
+      border-radius:15px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.3);
+      padding:40px;
+    }
+    header { text-align:center; margin-bottom:30px; }
+    h1 {
+      font-size: 2.8em;
+      color:#2C5282;
+      font-weight:bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.08);
+      margin-bottom:10px;
+    }
+    .subtitle { font-size:1.2em; color:#4A5568; }
+    .tagline {
+      margin:24px auto 0;
+      display:inline-block;
+      padding:10px 18px;
+      color:#fff;
+      border-radius:30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-weight:bold;
+    }
+    .grid { display:grid; grid-template-columns: 1fr 1fr; gap:30px; margin-top:30px; }
+    .card {
+      background:#f8fafc;
+      border-left:5px solid #3182ce;
+      border-radius:12px;
+      padding:22px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    }
+    .card.alt { border-left-color:#805ad5; }
+    .card.diff { border-left-color:#e53e3e; background:#fff5f5; }
+    h2 { color:#2C5282; font-size:1.8em; margin-bottom:8px; text-align:center; }
+    h3 { color:#4A5568; font-size:1.3em; margin:14px 0 8px; }
+    ul { list-style:none; }
+    li {
+      padding-left:28px;
+      position:relative;
+      margin:8px 0;
+      line-height:1.55;
+    }
+    li::before { content:"•"; position:absolute; left:8px; color:#2C5282; font-size:1.2em; }
+    .footer { margin-top:26px; font-size:0.95em; color:#4A5568; }
+    .legend { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:14px; }
+    .pill { padding:6px 10px; border-radius:999px; font-weight:600; color:#fff; }
+    .p-blue { background:#3182ce; }
+    .p-purple { background:#805ad5; }
+    .p-red { background:#e53e3e; }
+    .source { margin-top:18px; font-size:0.9em; color:#718096; text-align:center; }
+    @media (max-width:900px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Haas vs Fanuc — G-Code Differences</h1>
+      <div class="subtitle">Side-by-side list of differences based only on the two manuals you provided</div>
+      <div class="legend">
+        <span class="pill p-blue">Haas-only</span>
+        <span class="pill p-purple">Fanuc-only</span>
+        <span class="pill p-red">Same code number, different meaning</span>
+      </div>
+      <div class="tagline">Reference layout & fonts matched to your sample</div>
+    </header>
+
+    <section class="grid">
+      <article class="card diff" style="grid-column:1 / -1;">
+        <h2>Same Code Number, Different Meaning</h2>
+        <ul>
+          <li><strong>G74</strong> — <em>Haas:</em> Reverse tapping &nbsp;|&nbsp; <em>Fanuc:</em> Left-hand tapping</li>
+          <li><strong>G92</strong> — <em>Haas:</em> Work coordinate system shift value &nbsp;|&nbsp; <em>Fanuc:</em> Spindle speed clamp/limit (per Fanuc usage)</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h2>Haas-Only (not listed in the Fanuc manual provided)</h2>
+        <ul>
+          <li><strong>G12 / G13</strong> — Circular pocket milling (CW / CCW)</li>
+          <li><strong>G35 / G36 / G37</strong> — Auto tool diameter, work offset, and tool length offset measurement</li>
+          <li><strong>G47</strong> — Text engraving</li>
+          <li><strong>G70 / G71 / G72</strong> — Bolt-hole cycles (circle, arc, along an angle)</li>
+          <li><strong>G77</strong> — Back boring (Fanuc uses <strong>G87</strong>)</li>
+          <li><strong>G100 / G101</strong> — Mirror image cancel / enable</li>
+          <li><strong>G103</strong> — Limit block buffering</li>
+          <li><strong>G107</strong> — Cylindrical mapping</li>
+          <li><strong>G110 – G129</strong> — Extended work coordinate systems</li>
+          <li><strong>G136</strong> — Auto work offset center measurement</li>
+          <li><strong>G141</strong> — 3D+ cutter compensation</li>
+          <li><strong>G143</strong> — 5-axis tool length compensation +</li>
+          <li><strong>G150</strong> — General-purpose pocket milling</li>
+          <li><strong>G154</strong> — Work coordinates P1–P99</li>
+          <li><strong>G156</strong> — Broaching cycle</li>
+          <li><strong>G167</strong> — Modify setting</li>
+          <li><strong>G174 / G184</strong> — Non-vertical rigid tap (CCW / CW)</li>
+          <li><strong>G187</strong> — Smoothness level setting</li>
+          <li><strong>G234</strong> — Tool Center Point Control (TCPC)</li>
+          <li><strong>G253</strong> — Orient spindle normal to Feature CS</li>
+          <li><strong>G254 / G255</strong> — Dynamic Work Offset on / cancel</li>
+          <li><strong>G266</strong> — Visible axes linear rapid % motion</li>
+          <li><strong>G268 / G269</strong> — Feature Coordinate System</li>
+        </ul>
+      </article>
+
+      <article class="card alt">
+        <h2>Fanuc-Only (not listed in the Haas manual provided)</h2>
+        <ul>
+          <li><strong>G02.1 / G03.1</strong> — Circular thread cutting</li>
+          <li><strong>G02.2 / G03.2 / G02.3 / G03.3 / G02.4 / G03.4</strong> — Involute, exponential, 3-D coordinate conversions</li>
+          <li><strong>G04.1</strong> — Prevent buffering</li>
+          <li><strong>G05.x</strong> — High-precision contour control / HRV / nano smoothing</li>
+          <li><strong>G06.2</strong> — NURBS interpolation</li>
+          <li><strong>G07 / G07.1</strong> — Hypothetical axis / cylindrical interpolation</li>
+          <li><strong>G08</strong> — AI contour control</li>
+          <li><strong>G10.6 / G10.9</strong> — Advanced programmable data input</li>
+          <li><strong>G12.1 / G13.1</strong> — Polar coordinate interpolation (on/cancel)</li>
+          <li><strong>G12.4 / G13.4</strong> — Groove cutting by continuous circle motion</li>
+          <li><strong>G15 / G16</strong> — Polar coordinate cancel / on</li>
+          <li><strong>G17.1</strong> — Plane conversion function</li>
+          <li><strong>G22 / G23</strong> — Stored-stroke check on/off</li>
+          <li><strong>G25 / G26</strong> — Spindle speed fluctuation detection off/on</li>
+          <li><strong>G28.2 / G30.x</strong> — Ref. return variants / floating reference</li>
+          <li><strong>G31.8</strong> — EGB-axis skip</li>
+          <li><strong>G33 / G34 / G35 / G36</strong> — Threading & variable-lead threading</li>
+          <li><strong>G41.x / G42.x</strong> — 3-D / nutating head radius comp variations</li>
+          <li><strong>G43.1–G43.9</strong> — Advanced tool-axis / TCP controls</li>
+          <li><strong>G44.1 / G44.9</strong> — Offset conversion / spindle unit comp</li>
+          <li><strong>G49.1 / G49.9</strong> — Cancel advanced compensation</li>
+          <li><strong>G50.1 / G50.2, G51.x</strong> — Advanced scaling / mirroring / polygon</li>
+          <li><strong>G53.1 / G53.2 / G53.6</strong> — Tool-axis direction / TCP retention</li>
+          <li><strong>G54.2 / G54.4</strong> — Rotary-table fixture offset / error comp</li>
+          <li><strong>G62</strong> — Auto corner override</li>
+          <li><strong>G66.1</strong> — Modal macro call (variant)</li>
+          <li><strong>G68.2 / G68.3 / G68.4</strong> — Tilted working-plane indexing</li>
+          <li><strong>G87</strong> — Back boring (Haas uses G77)</li>
+         
