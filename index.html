@@ -1,204 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haas vs Fanuc — G-Code Differences</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #fff;
-            color: #333;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .presentation-container {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .slide {
-            flex: 1;
-            padding: 60px;
-            background: white;
-            margin: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            overflow-y: auto;
-            position: relative;
-        }
-        .slide-content {
-            max-width: 1100px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        h1 {
-            font-size: 3em;
-            color: #2C5282;
-            margin-bottom: 20px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        .subtitle {
-            font-size: 1.6em;
-            color: #4A5568;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-        .app-comparison {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin: 40px 0;
-            text-align: left;
-        }
-        .app-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            border: 3px solid #e2e8f0;
-            text-align: left;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .app-card h4 {
-            font-size: 1.6em;
-            color: #2C5282;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .app-card ul { list-style: none; padding: 0; }
-        .app-card li {
-            margin: 10px 0;
-            padding-left: 25px;
-            position: relative;
-            line-height: 1.5;
-        }
-        .app-card li::before {
-            content: "✓";
-            color: #38a169;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-        .diff-section {
-            margin-top: 50px;
-            text-align: left;
-        }
-        .diff-card {
-            background: #fff5f5;
-            border-left: 5px solid #e53e3e;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .diff-card h4 {
-            font-size: 1.4em;
-            color: #e53e3e;
-            margin-bottom: 10px;
-        }
-        .diff-card ul { list-style: none; padding: 0; }
-        .diff-card li {
-            margin: 8px 0;
-            padding-left: 20px;
-            position: relative;
-        }
-        .diff-card li::before {
-            content: "•";
-            color: #e53e3e;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-        @media (max-width: 900px) {
-            .app-comparison { grid-template-columns: 1fr; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multiaxis Library Home</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f7f9fb;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #2C5282;
+    }
+    .subtitle {
+      font-size: 1.2em;
+      color: #4A5568;
+      margin-top: 10px;
+    }
+    .vault-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .vault-card {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .vault-card:hover {
+      transform: translateY(-5px);
+    }
+    .vault-title {
+      font-size: 1.5em;
+      color: #2C5282;
+      margin-bottom: 20px;
+    }
+    .vault-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #5B9BD5;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+    .vault-button:hover {
+      background: #2C5282;
+    }
+  </style>
 </head>
 <body>
-    <div class="presentation-container">
-        <div class="slide active">
-            <div class="slide-content">
-                <h1>Haas vs Fanuc — G-Code Differences</h1>
+  <header>
+    <h1>Multiaxis Intelligence Library</h1>
+    <div class="subtitle">Choose a section to explore</div>
+  </header>
 
-                <div class="app-comparison">
-                    <div class="app-card">
-                        <h4>🔵 Haas-Only G-Codes</h4>
-                        <ul>
-                            <li>G12 / G13 — Circular pocket milling (CW / CCW)</li>
-                            <li>G35 / G36 / G37 — Auto tool diameter, work offset, and tool length offset measurement</li>
-                            <li>G47 — Text engraving</li>
-                            <li>G70 / G71 / G72 — Bolt-hole cycles (circle, arc, along an angle)</li>
-                            <li>G77 — Back boring (Fanuc uses G87)</li>
-                            <li>G100 / G101 — Mirror image cancel / enable</li>
-                            <li>G103 — Limit block buffering</li>
-                            <li>G107 — Cylindrical mapping</li>
-                            <li>G110 – G129 — Extended work coordinate systems</li>
-                            <li>G136 — Auto work offset center measurement</li>
-                            <li>G141 — 3D+ cutter compensation</li>
-                            <li>G143 — 5-axis tool length compensation +</li>
-                            <li>G150 — General-purpose pocket milling</li>
-                            <li>G154 — Work coordinates P1–P99</li>
-                            <li>G156 — Broaching cycle</li>
-                            <li>G167 — Modify setting</li>
-                            <li>G174 / G184 — Non-vertical rigid tap (CCW / CW)</li>
-                            <li>G187 — Smoothness level setting</li>
-                            <li>G234 — Tool Center Point Control (TCPC)</li>
-                            <li>G253 — Orient spindle normal to Feature CS</li>
-                            <li>G254 / G255 — Dynamic Work Offset on / cancel</li>
-                            <li>G266 — Visible axes linear rapid % motion</li>
-                            <li>G268 / G269 — Feature Coordinate System</li>
-                        </ul>
-                    </div>
-                    <div class="app-card">
-                        <h4>🟣 Fanuc-Only G-Codes</h4>
-                        <ul>
-                            <li>G02.1 / G03.1 — Circular thread cutting</li>
-                            <li>G02.2 / G03.2 / G02.3 / G03.3 / G02.4 / G03.4 — Involute, exponential, 3-D conversions</li>
-                            <li>G04.1 — Prevent buffering</li>
-                            <li>G05.x — High-precision contour / HRV / nano smoothing</li>
-                            <li>G06.2 — NURBS interpolation</li>
-                            <li>G07 / G07.1 — Hypothetical axis / cylindrical interpolation</li>
-                            <li>G08 — AI contour control</li>
-                            <li>G10.6 / G10.9 — Advanced programmable input</li>
-                            <li>G12.1 / G13.1 — Polar coordinate interpolation</li>
-                            <li>G12.4 / G13.4 — Groove cutting by continuous circle motion</li>
-                            <li>G15 / G16 — Polar coordinate cancel / on</li>
-                            <li>G17.1 — Plane conversion function</li>
-                            <li>G22 / G23 — Stored-stroke check on/off</li>
-                            <li>G25 / G26 — Spindle speed fluctuation detection</li>
-                            <li>G28.2 / G30.x — Reference return variants</li>
-                            <li>G31.8 — EGB-axis skip</li>
-                            <li>G33 / G34 / G35 / G36 — Threading & variable-lead threading</li>
-                            <li>G41.x / G42.x — 3-D / nutating head radius comp variations</li>
-                            <li>G43.1–G43.9 — Advanced tool-axis / TCP controls</li>
-                            <li>G44.1 / G44.9 — Offset conversion / spindle unit comp</li>
-                            <li>G49.1 / G49.9 — Cancel advanced compensation</li>
-                            <li>G50.1 / G50.2, G51.x — Advanced scaling / polygon / mirroring</li>
-                            <li>G53.1 / G53.2 / G53.6 — Tool-axis direction / TCP retention</li>
-                            <li>G54.2 / G54.4 — Rotary-table fixture offset / error comp</li>
-                            <li>G62 — Auto corner override</li>
-                            <li>G66.1 — Modal macro call (variant)</li>
-                            <li>G68.2 / G68.3 / G68.4 — Tilted working-plane indexing</li>
-                            <li>G87 — Back boring (Haas uses G77)</li>
-                            <li>G88 — Boring with dwell, spindle stop, manual retract</li>
-                        </ul>
-                    </div>
-                </div>
+  <main>
+    <div class="vault-grid">
+      <div class="vault-card">
+        <h3 class="vault-title">G-Code Differences</h3>
+        <a href="gcode-differences.html" class="vault-button">Go</a>
+      </div>
 
-                <div class="diff-section">
-                    <div class="diff-card">
-                        <h4>🔴 Same Code Number, Different Meaning</h4>
-                        <ul>
-                            <li><strong>G74</strong> — Haas: Reverse tapping | Fanuc: Left-hand tapping</li>
-                            <li><strong>G92</strong> — Haas: Work coordinate shift | Fanuc: Spindle speed clamp</li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="vault-card">
+        <h3 class="vault-title">M-Code Differences</h3>
+        <a href="mcode-differences.html" class="vault-button">Go</a>
+      </div>
 
-            </div>
-        </div>
+      <div class="vault-card">
+        <h3 class="vault-title">Canned Cycle Differences</h3>
+        <a href="canned-cycles.html" class="vault-button">Go</a>
+      </div>
     </div>
+  </main>
 </body>
 </html>
