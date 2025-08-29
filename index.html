@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HAAS Vs Fanuc Differences</title>
+  <title>Multiaxis Library Home</title>
+  <script src="js/protection.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -41,13 +42,15 @@
       transition: transform 0.2s ease;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: space-between; /* keeps buttons aligned */
     }
     .vault-card:hover {
       transform: translateY(-5px);
     }
     .vault-title {
-      min-height: 3em; /* Ensures equal title area height */
+      font-size: 1.5em;
+      color: #2C5282;
+      min-height: 3em; /* ensures equal height across cards */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -69,28 +72,41 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>HAAS Vs Fanuc</h1>
-    <div class="subtitle">Choose a section to explore</div>
-  </header>
+  <div id="protectedContent">
+    <header>
+      <h1>Multiaxis Intelligence Library</h1>
+      <div class="subtitle">Choose a section to explore</div>
+    </header>
 
-  <main>
-    <div class="vault-grid">
-      <div class="vault-card">
-        <h3 class="vault-title">G-Code Differences</h3>
-        <a href="pages/gcode_diff.html" class="vault-button">Go</a>
-      </div>
+    <main>
+      <div class="vault-grid">
+        <div class="vault-card">
+          <h3 class="vault-title">G-Code Differences</h3>
+          <a href="pages/gcode_diff.html" class="vault-button">Go</a>
+        </div>
 
-      <div class="vault-card">
-        <h3 class="vault-title">M-Code Differences</h3>
-        <a href="pages/mcode_diff.html" class="vault-button">Go</a>
-      </div>
+        <div class="vault-card">
+          <h3 class="vault-title">M-Code Differences</h3>
+          <a href="pages/mcode_diff.html" class="vault-button">Go</a>
+        </div>
 
-      <div class="vault-card">
-        <h3 class="vault-title">Canned Cycle Differences</h3>
-        <a href="pages/canned_cycles.html" class="vault-button">Go</a>
+        <div class="vault-card">
+          <h3 class="vault-title">Canned Cycle Differences</h3>
+          <a href="pages/canned_cycles.html" class="vault-button">Go</a>
+        </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
+
+  <script>
+    MultiaxisProtection.init({
+      title: 'Protected Multiaxis Library',
+      sessionKey: 'homepage_access',
+      safeHarborDaysValid: 180, // optional: 6 months validity
+      onSafeHarborAccept: function() {
+        console.log('User accepted legal terms on homepage');
+      }
+    });
+  </script>
 </body>
 </html>
