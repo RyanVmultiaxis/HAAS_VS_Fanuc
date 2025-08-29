@@ -6,16 +6,136 @@
   <title>Canned Cycle Differences</title>
   <style>
     body { font-family:'Segoe UI',sans-serif; margin:40px; background:#f7f9fb; }
-    .container { max-width:1000px; margin:0 auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.1); }
+    .container { max-width:1200px; margin:0 auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.1); }
     h1 { color:#2C5282; margin-bottom:20px; }
     a.back { display:inline-block; margin-bottom:20px; text-decoration:none; color:#fff; background:#5B9BD5; padding:8px 16px; border-radius:6px; }
+    h2 { color:#2C5282; margin-top:30px; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; }
+    .card { background:#f8fafc; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .card h3 { margin-top:0; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:left; vertical-align:top; }
+    th { background:#edf2f7; }
+    .diff { background:#fff5f5; border-left:5px solid #e53e3e; margin-top:20px; padding:15px; border-radius:8px; }
+    .diff strong { color:#e53e3e; }
   </style>
 </head>
 <body>
   <div class="container">
     <a href="../index.html" class="back">⬅ Back to Home</a>
-    <h1>Canned Cycle Differences</h1>
-    <p>Content comparing Haas vs Fanuc canned cycles will go here.</p>
+    <h1>Haas vs Fanuc — Canned Cycle Differences</h1>
+
+    <div class="card">
+      <h3>G80 — Cancel Cycle</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr><td>Cancels active canned cycle. No variables.</td><td>Cancels active canned cycle. No variables.</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G81 — Drilling</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z<br><strong>Optional:</strong> E (chip clean RPM), L, X, Y</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F<br><strong>Optional:</strong> K (repeat), P (dwell), L (loop)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G82 — Drilling with Dwell</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z<br><strong>Optional:</strong> E, L, X, Y, P (dwell)</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F, P (dwell)<br><strong>Optional:</strong> L (loop)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G83 — Peck Drilling</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z, Q or (I,J,K)<br><strong>Optional:</strong> E, L, P, I, J, K</td>
+          <td><strong>Required:</strong> X, Y, Z, R, Q, F<br><strong>Optional:</strong> P (dwell), K (repeat), L (loop)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G84 — Tapping</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z, S<br><strong>Optional:</strong> J (retract multiplier), L, X, Y</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F, S<br><strong>Optional:</strong> P (dwell), L (loop)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G85 — Boring (Feed In/Out)</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z<br><strong>Optional:</strong> L, X, Y</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F<br><strong>Optional:</strong> L, K (repeat)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G86 — Boring (Feed In, Stop, Rapid Out)</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z<br><strong>Optional:</strong> L, X, Y</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F<br><strong>Optional:</strong> P (dwell), L (loop)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G87 — Back Boring</h3>
+      <table>
+        <tr><th>Haas (uses G77)</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z, Q<br><strong>Optional:</strong> I, J shift</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F<br><strong>Optional:</strong> Q shift, I/J shift, L loop</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G88 — Boring with Dwell, Stop, Manual Retract</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td>Not available.</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F, P (dwell)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>G89 — Boring with Dwell, Feed In/Out</h3>
+      <table>
+        <tr><th>Haas</th><th>Fanuc</th></tr>
+        <tr>
+          <td><strong>Required:</strong> F, R, Z, P<br><strong>Optional:</strong> L, X, Y</td>
+          <td><strong>Required:</strong> X, Y, Z, R, F, P<br><strong>Optional:</strong> L</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="diff">
+      <p><strong>Special Haas-Only Cycles:</strong> G73 (High-speed Peck Drilling), G74 (Reverse Tapping), G76 (Fine Boring), G77 (Back Boring).</p>
+      <p><strong>Special Fanuc-Only Cycles:</strong> G74 (Peck Drilling / Tapping variant), G76 (Thread Cutting), G88 (Boring dwell/manual retract).</p>
+    </div>
   </div>
 </body>
 </html>
