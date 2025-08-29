@@ -6,16 +6,100 @@
   <title>M-Code Differences</title>
   <style>
     body { font-family:'Segoe UI',sans-serif; margin:40px; background:#f7f9fb; }
-    .container { max-width:1000px; margin:0 auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.1); }
+    .container { max-width:1100px; margin:0 auto; background:#fff; padding:30px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.1); }
     h1 { color:#2C5282; margin-bottom:20px; }
     a.back { display:inline-block; margin-bottom:20px; text-decoration:none; color:#fff; background:#5B9BD5; padding:8px 16px; border-radius:6px; }
+    h2 { color:#2C5282; margin-top:30px; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px; }
+    .card { background:#f8fafc; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .card h3 { margin-top:0; }
+    ul { list-style:none; padding:0; margin:0; }
+    li { margin:8px 0; padding-left:20px; position:relative; }
+    li::before { content:"•"; color:#2C5282; position:absolute; left:0; }
+    .common { background:#edfdfd; border-left:5px solid #38b2ac; }
+    .common h3 { color:#2C7A7B; }
+    .diff-haas { background:#ebf8ff; border-left:5px solid #3182ce; }
+    .diff-haas h3 { color:#2B6CB0; }
+    .diff-fanuc { background:#faf5ff; border-left:5px solid #805ad5; }
+    .diff-fanuc h3 { color:#6B46C1; }
   </style>
 </head>
 <body>
   <div class="container">
     <a href="../index.html" class="back">⬅ Back to Home</a>
-    <h1>M-Code Differences</h1>
-    <p>Content comparing Haas vs Fanuc M-codes will go here.</p>
+    <h1>Haas vs Fanuc — M-Code Differences</h1>
+
+    <div class="card common">
+      <h3>✅ Common to Both</h3>
+      <ul>
+        <li>M00 — Program Stop</li>
+        <li>M01 — Optional Stop</li>
+        <li>M02 — Program End</li>
+        <li>M03 — Spindle CW</li>
+        <li>M04 — Spindle CCW</li>
+        <li>M05 — Spindle Stop</li>
+        <li>M06 — Tool Change</li>
+        <li>M08 — Coolant ON</li>
+        <li>M09 — Coolant OFF</li>
+        <li>M19 — Spindle Orientation</li>
+        <li>M29 — Rigid Tapping Mode</li>
+        <li>M30 — Program End/Reset</li>
+        <li>M97/M98/M99 — Subprogram calls & End of Subprogram</li>
+      </ul>
+    </div>
+
+    <div class="grid">
+      <div class="card diff-haas">
+        <h3>🔵 Haas-Only</h3>
+        <ul>
+          <li>M07 — Mist Coolant ON</li>
+          <li>M17 — Program Restart Point</li>
+          <li>M21 — Pallet Clamp</li>
+          <li>M22 — Pallet Unclamp</li>
+          <li>M23/M24 — Tool Clamp/Unclamp</li>
+          <li>M36/M37 — Chip Auger Control</li>
+          <li>M41/M42 — Spindle Gear Range (Low/High)</li>
+          <li>M51–M59 — User Auxiliary Outputs</li>
+          <li>M95 — Sleep Mode</li>
+          <li>M119/M199 — Pallet & Program Handling</li>
+        </ul>
+      </div>
+
+      <div class="card diff-fanuc">
+        <h3>🟣 Fanuc-Only</h3>
+        <ul>
+          <li>M07 — Chip Air Blow ON (different meaning)</li>
+          <li>M10/M11 — 4th Axis Clamp/Unclamp</li>
+          <li>M12 — Suppress Buffering</li>
+          <li>M13/M14/M15 — High-speed spindle CW / CCW / Stop</li>
+          <li>M17/M18 — Touch Probe Power ON/OFF</li>
+          <li>M20–M24 — Center-through coolant & purge controls</li>
+          <li>M26/M27 — Taper Cleaning Coolant ON/OFF</li>
+          <li>M28 — Small-hole Peck Drilling ON</li>
+          <li>M31 — Machining / Power Saving Mode</li>
+          <li>M32–M34 — AI Tool Monitor No-Load Detection</li>
+          <li>M38/M39 — Probe Error Detection Start/End</li>
+          <li>M40–M44 — AI Tool Monitor Functions</li>
+          <li>M45/M46 — Macro Program Reserved</li>
+          <li>M47 — Rapid Traverse Override</li>
+          <li>M50–M53 — Chip Blow / Side Door Control</li>
+          <li>M60–M65 — Auto Door / External I/O Signals</li>
+          <li>M66/M67 — High-speed Spindle Holder Detect ON/OFF</li>
+          <li>M68/M69 — 5th Axis Clamp/Unclamp</li>
+          <li>M70–M72 — 4th Axis Clamp/Unclamp Variants</li>
+          <li>M73–M77 — Mirror Image Functions</li>
+          <li>M78/M79 — High-speed Spindle Connect/Disconnect</li>
+          <li>M80–M89 — External Interface</li>
+          <li>M91/M92/M143–M145 — Production Counters</li>
+          <li>M96/M97 — Custom Macro Interrupt ON/OFF</li>
+          <li>M100–M129 — External Interface/Panel Signals</li>
+          <li>M130/M131 — Flood Coolant ON/OFF (different implementation)</li>
+          <li>M132/M133 — Tool Runout Register/Measure</li>
+          <li>M170–M172 — 5th Axis Clamp/Unclamp (DDR)</li>
+          <li>M198 — Subprogram Call from External Memory</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </body>
 </html>
